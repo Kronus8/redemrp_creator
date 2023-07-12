@@ -1223,6 +1223,15 @@ end
 
 function OpenMouthMenu()
     MenuData.CloseAll()
+
+    RequestAnimDict("FACE_HUMAN@GEN_MALE@BASE")
+
+    while not HasAnimDictLoaded("FACE_HUMAN@GEN_MALE@BASE") do
+        Wait(100)
+    end
+
+    TaskPlayAnim(PlayerPedId(), "FACE_HUMAN@GEN_MALE@BASE", "Face_Dentistry_Loop", 1090519040, -4, -1, 17, 0, 0, 0, 0, 0, 0)
+
     local elements = {{
         label = "Width",
         value = CreatorCache["mouth_width"] or 0,
@@ -1313,6 +1322,14 @@ function OpenMouthMenu()
         min = -100,
         max = 100,
         hop = 5
+    }, {
+        label = "Teeth",
+        value = CreatorCache["teeth"] or 1,
+        category = "teeth",
+        desc = "Change the look",
+        type = "slider",
+        min = 1,
+        max = 7, 
     }}
 
     MenuData.Open('default', GetCurrentResourceName(), 'mouth_character_creator_menu', {
@@ -1322,6 +1339,7 @@ function OpenMouthMenu()
         elements = elements
     }, function(data, menu)
     end, function(data, menu)
+        ClearPedTasks(PlayerPedId())
         OpenFaceMenu()
     end, function(data, menu)
         if CreatorCache[data.current.category] ~= data.current.value then

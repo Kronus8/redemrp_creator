@@ -43,6 +43,7 @@ features_name = {
     "lower_lip_height",
     "lower_lip_width",
     "lower_lip_depth",
+    "teeth"
 }
 
 BODY_TYPES = {
